@@ -4,10 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-psycopg-binary = "*"
 fastapi = "*"
 uvicorn = {extras = ["standard"], version = "*"}
 alembic = "*"
+sqlalchemy = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 neovim = "*"

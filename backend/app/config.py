@@ -9,10 +9,13 @@ class Settings(BaseSettings):
 
     @property
     def connection_url(self) -> str:
-        return f"postgresql+psycopg://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}".format(
+        return "postgresql+psycopg2://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}".format(
                     db_user=self.db_user,
-                    db_pass=db_pass,
-                    db_host=db_host,
-                    db_port=db_port,
-                    db_name=db_name
+                    db_pass=self.db_pass,
+                    db_host=self.db_host,
+                    db_port=self.db_port,
+                    db_name=self.db_name
                 )
+
+
+settings = Settings()
