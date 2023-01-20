@@ -1,6 +1,9 @@
 from fastapi import APIRouter
 
-router = APIRouter("/aws")
+router = APIRouter(
+        prefix="/aws",
+        tags=["aws"]
+        )
 
 
 @router.get("/")
