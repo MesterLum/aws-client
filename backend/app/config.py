@@ -1,6 +1,9 @@
 from pydantic import BaseSettings
 
 class Settings(BaseSettings):
+    debug: bool = True
+
+    # database
     db_host: str
     db_user: str
     db_pass: str

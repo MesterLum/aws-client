@@ -21,7 +21,10 @@ if config.config_file_name is not None:
 # add your model's MetaData object here
 # for 'autogenerate' support
 from app.core.models.users import User
-target_metadata = [User.metadata]
+from app.core.models.aws import AwsCredential
+from app.database import Base
+
+target_metadata = Base.metadata
 # target_metadata = None
 
 # other values from the config, defined by the needs of env.py,
