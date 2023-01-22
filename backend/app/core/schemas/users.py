@@ -1,3 +1,5 @@
+import datetime
+
 from pydantic import BaseModel, Field
 
 class UserBase(BaseModel):
@@ -8,6 +10,18 @@ class UserCreate(UserBase):
 
 class UserCreateOut(UserBase):
     id: int
+
+    class Config:
+        orm_mode = True
+
+class UserDetailIn(BaseModel):
+    active: bool = Field(description="Activate flag")
+
+class UserDetailOut(UserBase):
+    id: int
+    active: bool = Field(description="Active user")
+    created_at: datetime.datetime = Field(description="Created at")
+    updated_at: datetime.datetime | None = Field(description="Last time user was updated")
 
     class Config:
         orm_mode = True
