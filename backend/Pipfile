@@ -9,7 +9,9 @@ uvicorn = {extras = ["standard"], version = "*"}
 alembic = "*"
 sqlalchemy = "*"
 psycopg2-binary = "*"
-bcrypt = "*"
+passlib = {extras = ["bcrypt"], version = "*"}
+python-multipart = "*"
+python-jose = {extras = ["cryptography"], version = "*"}
 
 [dev-packages]
 neovim = "*"

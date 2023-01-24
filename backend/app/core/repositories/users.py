@@ -1,15 +1,16 @@
-import bcrypt
-
 from sqlalchemy.orm import Session
 from app.core.schemas.users import UserCreate
 from app.core.models.users import User
 
+from passlib.context import CryptContext
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 def get_user_by_username(db: Session, username: str) -> User:
     return db.query(User).filter_by(username=username).first()
 
 def create_user(db: Session, user: UserCreate, **kwargs) -> User:
-    hashed_password = bcrypt.hashpw(user.password.encode("UTF-8"), bcrypt.gensalt())
+    hashed_password = pwd_context.hash(user.password)
     user.password = hashed_password
 
     user = User(**user.dict(), **kwargs)

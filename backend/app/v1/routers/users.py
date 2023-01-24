@@ -5,6 +5,8 @@ from app.dependencies.database import get_db
 from app.core.repositories.users import create_user as create_user_in_db, get_user_by_username, get_users, get_user_by_id
 from app.core.schemas.users import UserCreate, UserCreateOut, UserDetailOut, UserDetailIn
 from app.core.schemas.common import MessageBase
+from app.dependencies.auth import oauth2_scheme, get_auth_user
+from app.core.models.users import User
 
 router = APIRouter(
             prefix="/users",
@@ -49,3 +51,7 @@ async def update_user(*,
 
     db.commit()
     return user_in_db
+
+@router.get("/me")
+async def read_me(user: User = Depends(get_auth_user)):
+    return {"message": "WOlrd"}

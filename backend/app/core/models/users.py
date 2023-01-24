@@ -17,7 +17,8 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     username = Column(String(50), nullable=False, unique=True)
     password = Column(String(255), nullable=False)
-    active = Column(Boolean, default=True)
+    is_admin = Column(Boolean(), default=False, nullable=False)
+    active = Column(Boolean, default=True, nullable=False)
 
     aws_credentials = relationship("AwsCredential")
 
