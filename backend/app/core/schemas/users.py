@@ -20,6 +20,7 @@ class UserDetailIn(BaseModel):
 class UserDetailOut(UserBase):
     id: int
     active: bool = Field(description="Active user")
+    is_admin: bool = Field(description="Is admin flag")
     created_at: datetime.datetime = Field(description="Created at")
     updated_at: datetime.datetime | None = Field(description="Last time user was updated")
 

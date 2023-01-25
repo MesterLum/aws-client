@@ -1,8 +1,8 @@
-"""Created aws table and relationship
+"""First migration
 
-Revision ID: 123f3d8dd60c
+Revision ID: 3f6e90bf1a1f
 Revises: 
-Create Date: 2023-01-20 18:05:43.067709
+Create Date: 2023-01-25 20:02:49.019441
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '123f3d8dd60c'
+revision = '3f6e90bf1a1f'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,7 +22,8 @@ def upgrade() -> None:
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(length=50), nullable=False),
     sa.Column('password', sa.String(length=255), nullable=False),
-    sa.Column('active', sa.Boolean(), nullable=True),
+    sa.Column('is_admin', sa.Boolean(), nullable=False),
+    sa.Column('active', sa.Boolean(), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
@@ -30,6 +31,7 @@ def upgrade() -> None:
     )
     op.create_table('aws_credentials',
     sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(length=255), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('access_key', sa.String(length=255), nullable=False),
     sa.Column('secret_access_key', sa.String(length=255), nullable=False),

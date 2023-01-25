@@ -1,4 +1,4 @@
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, status, Request
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, ExpiredSignatureError
 from sqlalchemy.orm import Session
@@ -10,7 +10,10 @@ from app.dependencies.database import get_db
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/login")
 
-def get_auth_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+def get_auth_user(*,
+                  token: str = Depends(oauth2_scheme),
+                  db: Session = Depends(get_db),
+                  request: Request):
 
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -41,5 +44,6 @@ def get_auth_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get
 
     if not user:
         raise credentials_exception
-    
+    # save for further usage
+    request.state.user = user
     return user

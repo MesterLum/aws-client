@@ -1,16 +1,17 @@
-from fastapi import APIRouter, Depends, HTTPException, status, Path
+from fastapi import APIRouter, Depends, HTTPException, status, Path, Request
 from sqlalchemy.orm import Session
 
 from app.dependencies.database import get_db
 from app.core.repositories.users import create_user as create_user_in_db, get_user_by_username, get_users, get_user_by_id
 from app.core.schemas.users import UserCreate, UserCreateOut, UserDetailOut, UserDetailIn
 from app.core.schemas.common import MessageBase
-from app.dependencies.auth import oauth2_scheme, get_auth_user
+from app.dependencies.users import get_admin_user
 from app.core.models.users import User
 
 router = APIRouter(
             prefix="/users",
-            tags=["users"]
+            tags=["users"],
+            dependencies=[Depends(get_admin_user)]
         )
 
 
@@ -53,5 +54,5 @@ async def update_user(*,
     return user_in_db
 
 @router.get("/me")
-async def read_me(user: User = Depends(get_auth_user)):
+async def read_me():
     return {"message": "WOlrd"}

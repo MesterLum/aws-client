@@ -13,7 +13,6 @@ from app.dependencies.database import get_db
 router = APIRouter(
         prefix="/auth",
         tags=["auth"]
-
     )
 
 
@@ -25,3 +24,7 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = 
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User or password incorrect")
 
     return auth_service.create_access_token_and_refresh_token(user.id)
+
+@router.post("/refresh-token", response_model=Token, responses={404: {"model": MessageBase}})
+async def refresh_token():
+    pass
